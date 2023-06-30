@@ -1,0 +1,14 @@
+.param {
+  font-size: 32px;
+  font-family: "Caveat Brush", cursive;
+}
+
+.paramInput {
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  text-decoration: underline;
+  width: 5ch;
+}
