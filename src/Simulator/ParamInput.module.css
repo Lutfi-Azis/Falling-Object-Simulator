@@ -9,6 +9,6 @@
   padding: 0;
   margin: 0;
   font-size: inherit;
-  text-decoration: underline;
+  text-decoration: underline dotted #aaa;
   width: 5ch;
 }

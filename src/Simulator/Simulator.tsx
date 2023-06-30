@@ -35,9 +35,10 @@ class Simulator extends Component<Props, State> {
     };
   }
 
-  handleMassChange = (value: number) => {
-    this.setState({ mass: value });
-  };
+  handleMassChange = (value: number) => this.setState({ mass: value });
+  handleGChange = (value: number) => this.setState({ g: value });
+  handleInitialHeightChange = (value: number) =>
+    this.setState({ initial_height: value });
 
   render() {
     return (
@@ -47,6 +48,18 @@ class Simulator extends Component<Props, State> {
           value={this.state.mass}
           units="kg"
           onChange={this.handleMassChange}
+        />
+        <ParamNumberInput
+          name="g"
+          value={this.state.g}
+          units="m/s^2"
+          onChange={this.handleGChange}
+        />
+        <ParamNumberInput
+          name="tinggi"
+          value={this.state.initial_height}
+          units="kg"
+          onChange={this.handleInitialHeightChange}
         />
       </div>
     );
