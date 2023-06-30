@@ -50,7 +50,7 @@ class Simulator extends Component<Props, State> {
           onChange={this.handleMassChange}
         />
         <ParamNumberInput
-          name="g"
+          name="gravitasi"
           value={this.state.g}
           units="m/s^2"
           onChange={this.handleGChange}
