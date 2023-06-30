@@ -21,6 +21,7 @@ const ParamInput: FC<props> = (props) => {
         className={classes.paramInput}
         value={props.value}
         onChange={handleChange}
+        style={{ width: (props.value) ? `${props.value.length}ch` : "5ch" }}
       />{" "}
       {props.suffix}
     </p>

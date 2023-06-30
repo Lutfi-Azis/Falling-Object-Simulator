@@ -1,6 +1,6 @@
 import { Component } from "react";
 import classes from "./Simulator.module.css";
-import ParamInput from "./ParamInput";
+import ParamNumberInput from "./ParamNumberInput";
 
 type Props = Record<string, never>;
 
@@ -35,10 +35,19 @@ class Simulator extends Component<Props, State> {
     };
   }
 
+  handleMassChange = (value: number) => {
+    this.setState({ mass: value });
+  };
+
   render() {
     return (
       <div className={classes.Simulator}>
-        <ParamInput prefix="massa=" value="10" suffix="kg" />
+        <ParamNumberInput
+          name="massa"
+          value={this.state.mass}
+          units="kg"
+          onChange={this.handleMassChange}
+        />
       </div>
     );
   }
