@@ -1,6 +1,6 @@
 class Channel<T> {
   private subscribers: Set<(value: T) => void> = new Set();
-  readonly latest: T;
+  private latest: T;
 
   constructor(initialValue: T) {
     this.latest = initialValue;
@@ -14,7 +14,12 @@ class Channel<T> {
   }
 
   notify(value: T) {
+    this.latest = value;
     this.subscribers.forEach((s) => s(value));
+  }
+
+  getLatest() {
+    return this.latest;
   }
 }
 
