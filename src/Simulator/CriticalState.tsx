@@ -6,6 +6,7 @@ class CriticalState {
   potentialEnergy = new Channel<number>();
   kineticEnergy = new Channel<number>();
   velocity = new Channel<number>();
+  progress = new Channel<number>();
 }
 
 export default CriticalState;
