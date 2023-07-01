@@ -1,26 +1,31 @@
 import { FC } from "react";
-import ParamInput from "./ParamInput";
+import ParamInput, { CommonProps } from "./ParamInput";
 
-type props = {
+type props = CommonProps & {
   name: string;
   value?: number;
   units: string;
   onChange?: (value: number) => void;
-  className?: string;
 };
 
-const ParamNumberInput: FC<props> = (props) => {
+const ParamNumberInput: FC<props> = ({
+  name,
+  value = 0,
+  units,
+  onChange,
+  ...props
+}) => {
   return (
     <ParamInput
-      prefix={props.name + "="}
-      value={props.value?.toString()}
-      suffix={props.units}
-      className={props.className}
+      prefix={name + "="}
+      value={value?.toString()}
+      suffix={units}
       onChange={(value) => {
         if (value.length === 0) value = "0";
         const isValid = /^-?\d+$/.test(value);
-        if (isValid) props.onChange?.(parseInt(value));
+        if (isValid) onChange?.(parseInt(value));
       }}
+      {...props}
     />
   );
 };

@@ -1,12 +1,16 @@
 import { FC } from "react";
 import classes from "./ParamInput.module.css";
 
-type props = {
+export type CommonProps = {
+  className?: string;
+  maxInputWidth?: string;
+};
+
+type props = CommonProps & {
   prefix?: string;
   value?: string;
   suffix?: string;
   onChange?: (value: string) => void;
-  className?: string;
 };
 
 const ParamInput: FC<props> = (props) => {
@@ -22,7 +26,10 @@ const ParamInput: FC<props> = (props) => {
         className={classes.paramInput}
         value={props.value}
         onChange={handleChange}
-        style={{ width: (props.value) ? `${props.value.length}ch` : "5ch" }}
+        style={{
+          width: props.value ? `${props.value.length}ch` : "5ch",
+          maxWidth: props.maxInputWidth,
+        }}
       />{" "}
       {props.suffix}
     </p>
