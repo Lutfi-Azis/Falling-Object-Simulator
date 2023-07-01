@@ -11,7 +11,7 @@
 }
 
 .ladderStep {
-  border: 6px solid #d7d7d7;
+  border: 6px solid var(--color-neutral-3);
   border-bottom: 0;
   box-shadow: var(--simulator-shadow-third);
 }
@@ -36,7 +36,7 @@
 .boardRailing {
   width: 25%;
   height: 60%;
-  border: 6px solid #d7d7d7;
+  border: 6px solid var(--color-neutral-2);
   position: relative;
   top: 40%;
   box-shadow: var(--simulator-shadow-third);
@@ -48,7 +48,7 @@
   right: 0;
   top: 100%;
   bottom: 0;
-  border: 4px #d7d7d7 solid;
+  border: 4px var(--color-neutral-2) solid;
   border-radius: 30px;
   box-shadow: var(--simulator-shadow-third);
 }

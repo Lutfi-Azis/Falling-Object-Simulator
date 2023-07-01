@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap");
+@import "./globals.css";
 
 body {
   background-color: #292929;
-  color: #fff;
+  color: var(--color-neutral-1);
 }
 
 #root {
