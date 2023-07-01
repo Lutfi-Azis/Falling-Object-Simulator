@@ -18,11 +18,11 @@ type State = {
   /**
    * Initial dropping height (m).
    */
-  initial_height: number;
+  initialHeight: number;
   /**
    * Is the simulator currently playing.
    */
-  is_playing: boolean;
+  isPlaying: boolean;
   /**
    * The Y (or top) coordinate of the tip of the board.
    */
@@ -36,8 +36,8 @@ class Simulator extends Component<Props, State> {
     this.state = {
       mass: 10,
       g: 10,
-      initial_height: 10,
-      is_playing: false,
+      initialHeight: 10,
+      isPlaying: false,
       boardTipY: 0,
     };
   }
@@ -45,7 +45,7 @@ class Simulator extends Component<Props, State> {
   handleMassChange = (value: number) => this.setState({ mass: value });
   handleGChange = (value: number) => this.setState({ g: value });
   handleInitialHeightChange = (value: number) =>
-    this.setState({ initial_height: value });
+    this.setState({ initialHeight: value });
   handleTipYBoardChange = (value: number) =>
     this.setState({ boardTipY: value });
 
@@ -74,7 +74,7 @@ class Simulator extends Component<Props, State> {
                 <ParamNumberInput
                   className={classes.heightPI}
                   name="tinggi"
-                  value={this.state.initial_height}
+                  value={this.state.initialHeight}
                   units="kg"
                   onChange={this.handleInitialHeightChange}
                 />
