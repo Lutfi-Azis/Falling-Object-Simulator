@@ -1,6 +1,7 @@
 import { Component } from "react";
 import classes from "./Simulator.module.css";
 import ParamNumberInput from "./ParamNumberInput";
+import DiveTower from "./DiveTower";
 
 type Props = Record<string, never>;
 
@@ -43,24 +44,39 @@ class Simulator extends Component<Props, State> {
   render() {
     return (
       <div className={classes.Simulator}>
-        <ParamNumberInput
-          name="massa"
-          value={this.state.mass}
-          units="kg"
-          onChange={this.handleMassChange}
-        />
-        <ParamNumberInput
-          name="gravitasi"
-          value={this.state.g}
-          units="m/s^2"
-          onChange={this.handleGChange}
-        />
-        <ParamNumberInput
-          name="tinggi"
-          value={this.state.initial_height}
-          units="kg"
-          onChange={this.handleInitialHeightChange}
-        />
+        <div className={classes.topLeftGroup}>
+          <ParamNumberInput
+            name="massa"
+            value={this.state.mass}
+            units="kg"
+            onChange={this.handleMassChange}
+          />
+          <ParamNumberInput
+            name="gravitasi"
+            value={this.state.g}
+            units="m/s^2"
+            onChange={this.handleGChange}
+          />
+        </div>
+
+        <div className={classes.air}>
+          <div className={classes.dry}>
+            <div className={classes.curlyTrio}>
+              <div>
+                <ParamNumberInput
+                  className={classes.heightPI}
+                  name="tinggi"
+                  value={this.state.initial_height}
+                  units="kg"
+                  onChange={this.handleInitialHeightChange}
+                />
+              </div>
+              <div></div>
+              <DiveTower />
+            </div>
+          </div>
+        </div>
+        <div className={classes.ground}></div>
       </div>
     );
   }

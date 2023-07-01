@@ -6,6 +6,7 @@ type props = {
   value?: string;
   suffix?: string;
   onChange?: (value: string) => void;
+  className?: string;
 };
 
 const ParamInput: FC<props> = (props) => {
@@ -14,7 +15,7 @@ const ParamInput: FC<props> = (props) => {
   };
 
   return (
-    <p className={classes.param}>
+    <p className={classes.param + " " + props.className}>
       {props.prefix}{" "}
       <input
         type="text"
