@@ -2,14 +2,14 @@ import { FC, useState, useRef, useEffect, useCallback } from "react";
 import classes from "./DiveTower.module.css";
 import { debounce } from "../utils";
 
-type props = {
+type Props = {
   /**
    * @param y The y (or top) coordinate of the tip of the board.
    */
   onTipYChange?: (y: number) => void;
 };
 
-const DiveTower: FC<props> = (props) => {
+const DiveTower: FC<Props> = (props) => {
   const ladderRef = useRef<HTMLDivElement>(null);
 
   const [nSteps, setNSteps] = useState(0);

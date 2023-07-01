@@ -1,14 +1,14 @@
 import { FC } from "react";
 import ParamInput, { CommonProps } from "./ParamInput";
 
-type props = CommonProps & {
+type Props = CommonProps & {
   name: string;
   value?: number;
   units: string;
   onChange?: (value: number) => void;
 };
 
-const ParamNumberInput: FC<props> = ({
+const ParamNumberInput: FC<Props> = ({
   name,
   value = 0,
   units,

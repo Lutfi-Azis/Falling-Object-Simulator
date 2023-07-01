@@ -6,14 +6,14 @@ export type CommonProps = {
   maxInputWidth?: string;
 };
 
-type props = CommonProps & {
+type Props = CommonProps & {
   prefix?: string;
   value?: string;
   suffix?: string;
   onChange?: (value: string) => void;
 };
 
-const ParamInput: FC<props> = (props) => {
+const ParamInput: FC<Props> = (props) => {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     props.onChange?.(event.target.value);
   };

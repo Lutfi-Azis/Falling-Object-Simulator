@@ -2,12 +2,12 @@ import classes from "./Volleyball.module.css";
 import { FC } from "react";
 import BallImage from "./volleyball.png";
 
-type props = {
+type Props = {
   leftOffset?: number;
   boardTipY: number;
 };
 
-const Volleyball: FC<props> = (props) => {
+const Volleyball: FC<Props> = (props) => {
   return (
     <img
       className={classes.volleyball}
