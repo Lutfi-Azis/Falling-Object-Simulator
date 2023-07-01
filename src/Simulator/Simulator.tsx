@@ -2,6 +2,7 @@ import { Component } from "react";
 import classes from "./Simulator.module.css";
 import ParamNumberInput from "./ParamNumberInput";
 import DiveTower from "./DiveTower";
+import Volleyball from "./Volleyball";
 
 type Props = Record<string, never>;
 
@@ -22,6 +23,10 @@ type State = {
    * Is the simulator currently playing.
    */
   is_playing: boolean;
+  /**
+   * The Y (or top) coordinate of the tip of the board.
+   */
+  boardTipY: number;
 };
 
 class Simulator extends Component<Props, State> {
@@ -33,6 +38,7 @@ class Simulator extends Component<Props, State> {
       g: 10,
       initial_height: 10,
       is_playing: false,
+      boardTipY: 0,
     };
   }
 
@@ -40,6 +46,8 @@ class Simulator extends Component<Props, State> {
   handleGChange = (value: number) => this.setState({ g: value });
   handleInitialHeightChange = (value: number) =>
     this.setState({ initial_height: value });
+  handleTipYBoardChange = (value: number) =>
+    this.setState({ boardTipY: value });
 
   render() {
     return (
@@ -72,8 +80,11 @@ class Simulator extends Component<Props, State> {
                 />
               </div>
               <div></div>
-              <DiveTower />
+              <DiveTower onTipYChange={this.handleTipYBoardChange} />
             </div>
+          </div>
+          <div className={classes.wet}>
+            <Volleyball leftOffset={130} boardTipY={this.state.boardTipY} />
           </div>
         </div>
         <div className={classes.ground}></div>

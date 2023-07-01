@@ -8,6 +8,7 @@
   position: relative;
   height: 85%;
   border: rgb(224, 0, 0) solid;
+  display: flex;
 }
 
 .ground {
@@ -21,6 +22,12 @@
   max-width: 50%;
   height: 100%;
   border: rgb(226, 0, 215) solid;
+}
+
+.wet {
+  position: relative;
+  flex-grow: 1;
+  border: rgb(226, 72, 0) solid;
 }
 
 .curlyTrio {

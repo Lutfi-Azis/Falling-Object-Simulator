@@ -2,9 +2,14 @@ import { FC, useState, useRef, useEffect, useCallback } from "react";
 import classes from "./DiveTower.module.css";
 import { debounce } from "../utils";
 
-type props = Record<string, never>;
+type props = {
+  /**
+   * @param y The y (or top) coordinate of the tip of the board.
+   */
+  onTipYChange?: (y: number) => void;
+};
 
-const DiveTower: FC<props> = () => {
+const DiveTower: FC<props> = (props) => {
   const ladderRef = useRef<HTMLDivElement>(null);
 
   const [nSteps, setNSteps] = useState(0);
@@ -13,6 +18,8 @@ const DiveTower: FC<props> = () => {
   const handleResize = useCallback(
     debounce(() => {
       if (!ladderRef.current) return;
+      if (props.onTipYChange)
+        props.onTipYChange(ladderRef.current.getBoundingClientRect().y);
       setNSteps(
         Math.floor(
           ladderRef.current.clientHeight / ladderRef.current.clientWidth
