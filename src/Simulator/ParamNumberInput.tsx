@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import ParamInput, { CommonProps } from "./ParamInput";
 
 type Props = CommonProps & {
@@ -15,15 +15,22 @@ const ParamNumberInput: FC<Props> = ({
   onChange,
   ...props
 }) => {
+  const [forcedDot, setForcedDot] = useState(false);
+
+  let displayValue = value?.toString();
+  if (forcedDot && displayValue) displayValue += ".";
+
   return (
     <ParamInput
       prefix={name + "="}
-      value={value?.toString()}
+      value={displayValue}
       suffix={units}
       onChange={(value) => {
         if (value.length === 0) value = "0";
-        const isValid = /^-?\d+$/.test(value);
-        if (isValid) onChange?.(parseInt(value));
+        setForcedDot(value[value.length - 1] === ".");
+
+        const isValid = /^-?\d*\.?\d*$/.test(value);
+        if (isValid) onChange?.(parseFloat(value));
       }}
       {...props}
     />

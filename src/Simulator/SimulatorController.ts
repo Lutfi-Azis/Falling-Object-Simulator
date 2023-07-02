@@ -17,6 +17,7 @@ class SimulatorController {
   private endTime = Infinity;
 
   private prevRAFTimestamp = 0;
+  private progressIncrement = 1 / MAX_FPS;
 
   constructor(criticalState: CriticalState, getState: () => SimulatorState) {
     this.getState = getState;
@@ -39,6 +40,7 @@ class SimulatorController {
   recalculateDerivedStableState() {
     const state = this.getState();
     this.endTime = getTouchDownTime(state.initialHeight, 0, state.g);
+    this.progressIncrement = state.playSpeed / MAX_FPS;
   }
 
   recalculateCriticalState() {
@@ -51,7 +53,7 @@ class SimulatorController {
 
     if (elapsed >= MAX_MS_PER_FRAME) {
       let newProgress =
-        this.criticalState.progress.getLatest() + 1 / (MAX_FPS * 5);
+        this.criticalState.progress.getLatest() + this.progressIncrement;
 
       if (newProgress > 1) {
         newProgress = 1;

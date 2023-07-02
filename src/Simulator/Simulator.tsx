@@ -26,6 +26,10 @@ export type State = {
    * The Y (or top) coordinate of the tip of the board.
    */
   boardTipY: number;
+  /**
+   * Playback speed multipler.
+   */
+  playSpeed: number;
 };
 
 class Simulator extends Component<Props, State> {
@@ -39,6 +43,7 @@ class Simulator extends Component<Props, State> {
       g: 10,
       initialHeight: 10,
       boardTipY: 0,
+      playSpeed: 1.0,
     };
   }
 
@@ -65,6 +70,7 @@ class Simulator extends Component<Props, State> {
     this.setState({ initialHeight: value });
   handleTipYBoardChange = (value: number) =>
     this.setState({ boardTipY: value });
+  handleSpeedChange = (value: number) => this.setState({ playSpeed: value });
 
   render() {
     if (!this.criticalState || !this.simulatorController) return null;
@@ -98,6 +104,8 @@ class Simulator extends Component<Props, State> {
         <Timeline
           criticalState={this.criticalState}
           className={classes.ground}
+          playSpeed={this.state.playSpeed}
+          onSpeedChange={this.handleSpeedChange}
         />
         <div className={classes.topLeftGroup}>
           <ParamNumberInput

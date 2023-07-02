@@ -7,9 +7,16 @@ import ParamNumberInput from "./ParamNumberInput";
 type Props = {
   criticalState: CriticalState;
   className?: string;
+  playSpeed: number;
+  onSpeedChange?: (value: number) => void;
 };
 
-const Timeline: FC<Props> = ({ criticalState, className }) => {
+const Timeline: FC<Props> = ({
+  criticalState,
+  className,
+  playSpeed,
+  onSpeedChange,
+}) => {
   const btnRef = useRef<HTMLButtonElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +59,12 @@ const Timeline: FC<Props> = ({ criticalState, className }) => {
         <div className={classes.divider} />
         <ChannelPI name="t" channel={criticalState.time} suffix="s" />
         <div className={classes.divider} />
-        <ParamNumberInput name="Speed" units="x" />
+        <ParamNumberInput
+          name="Speed"
+          units="x"
+          value={playSpeed}
+          onChange={onSpeedChange}
+        />
       </div>
       <input
         defaultValue={0}
