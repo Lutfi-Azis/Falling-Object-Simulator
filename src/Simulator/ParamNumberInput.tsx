@@ -10,7 +10,7 @@ type Props = CommonProps & {
 
 const ParamNumberInput: FC<Props> = ({
   name,
-  value = 0,
+  value,
   units,
   onChange,
   ...props

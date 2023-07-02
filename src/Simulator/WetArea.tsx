@@ -25,7 +25,12 @@ const WetArea: FC<Props> = (props) => {
         initialBallHeight={props.initialBallHeight}
         criticalState={props.criticalState}
       />
-      <HeightPI criticalState={props.criticalState} />
+      <HeightPI
+        criticalState={props.criticalState}
+        boardTipY={props.boardTipY}
+        getParentHeight={getHeight}
+        initialBallHeight={props.initialBallHeight}
+      />
     </div>
   );
 };

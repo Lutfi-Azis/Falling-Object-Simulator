@@ -5,6 +5,7 @@ export type CommonProps = {
   className?: string;
   maxInputWidth?: string;
   inputRef?: Ref<HTMLInputElement>;
+  containerRef?: Ref<HTMLParagraphElement>;
 };
 
 type Props = CommonProps & {
@@ -22,7 +23,10 @@ const ParamInput: FC<Props> = (props) => {
     };
 
   return (
-    <p className={classes.param + " " + props.className}>
+    <p
+      className={classes.param + " " + props.className}
+      ref={props.containerRef}
+    >
       {props.prefix}{" "}
       <input
         type="text"
