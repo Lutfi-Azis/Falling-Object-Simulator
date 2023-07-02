@@ -28,7 +28,7 @@ const ChannelPI: FC<Props> = ({
     channel.subscribe(handleNotification);
 
     return () => {
-      channel.subscribe(handleNotification);
+      channel.unsubscribe(handleNotification);
     };
   }, [channel]);
 
