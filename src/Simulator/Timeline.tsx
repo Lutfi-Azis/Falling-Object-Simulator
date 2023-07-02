@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import classes from "./Timeline.module.css";
 import CriticalState from "./CriticalState";
 import ChannelPI from "./ChannelPI";
@@ -20,16 +20,16 @@ const Timeline: FC<Props> = ({
   const btnRef = useRef<HTMLButtonElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     if (criticalState.progress.getLatest() === 1)
       criticalState.progress.notify(0);
 
     criticalState.isPlaying.notify(!criticalState.isPlaying.getLatest());
-  }, [criticalState]);
+  };
 
-  const handleInputChange = useCallback(() => {
+  const handleInputChange = () => {
     criticalState.progress.notify(parseInt(sliderRef.current!.value) / 1000);
-  }, [criticalState]);
+  };
 
   useEffect(() => {
     const handlePlayStateChange = (isPlaying: boolean) => {

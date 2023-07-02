@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect, useCallback } from "react";
+import { FC, useState, useRef, useEffect } from "react";
 import classes from "./DiveTower.module.css";
 import { debounce } from "../utils";
 
@@ -15,19 +15,14 @@ const DiveTower: FC<Props> = (props) => {
   const [nSteps, setNSteps] = useState(0);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleResize = useCallback(
-    debounce(() => {
-      if (!ladderRef.current) return;
-      if (props.onTipYChange)
-        props.onTipYChange(ladderRef.current.getBoundingClientRect().y);
-      setNSteps(
-        Math.floor(
-          ladderRef.current.clientHeight / ladderRef.current.clientWidth
-        )
-      );
-    }, 700),
-    []
-  );
+  const handleResize = debounce(() => {
+    if (!ladderRef.current) return;
+    if (props.onTipYChange)
+      props.onTipYChange(ladderRef.current.getBoundingClientRect().y);
+    setNSteps(
+      Math.floor(ladderRef.current.clientHeight / ladderRef.current.clientWidth)
+    );
+  }, 700);
 
   useEffect(() => {
     handleResize();
