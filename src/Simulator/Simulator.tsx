@@ -97,7 +97,7 @@ class Simulator extends Component<Props, State> {
                   className={classes.heightPI}
                   name="tinggi"
                   value={this.state.initialHeight}
-                  units="kg"
+                  units="m"
                   onChange={this.handleInitialHeightChange}
                 />
               </div>
