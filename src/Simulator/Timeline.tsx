@@ -39,9 +39,15 @@ const Timeline: FC<Props> = ({ criticalState, className }) => {
 
   return (
     <div className={`${classes.timeline} ${className}`}>
-      <button ref={btnRef} onClick={handleClick}>
-        Play
-      </button>
+      <div className={classes.timelineControls}>
+        <button
+          className={classes.togglePlay}
+          ref={btnRef}
+          onClick={handleClick}
+        >
+          Play
+        </button>
+      </div>
       <input
         defaultValue={0}
         className={classes.timelineSlider}
