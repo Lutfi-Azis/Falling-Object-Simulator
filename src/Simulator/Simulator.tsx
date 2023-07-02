@@ -51,9 +51,6 @@ class Simulator extends Component<Props, State> {
       () => this.state
     );
 
-    this.simulatorController.recalculateDerivedStableState();
-    this.simulatorController.recalculateCriticalState();
-
     // So `criticalState` and `simulatorController` will be available in `render`.
     this.forceUpdate();
   }
@@ -71,6 +68,8 @@ class Simulator extends Component<Props, State> {
 
   render() {
     if (!this.criticalState || !this.simulatorController) return null;
+    this.simulatorController.recalculateDerivedStableState();
+    this.simulatorController.recalculateCriticalState();
 
     return (
       <div className={classes.Simulator}>
