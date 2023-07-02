@@ -13,7 +13,7 @@ body {
 
 button {
   font-family: var(--font-label);
-  border: solid 3px var(--color-neutral-3);
+  border: outset 3px var(--color-neutral-3);
   border-radius: 10px;
   padding: 2px 5px;
   cursor: pointer;
