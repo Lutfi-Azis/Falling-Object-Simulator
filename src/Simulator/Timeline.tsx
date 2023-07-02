@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useRef } from "react";
 import classes from "./Timeline.module.css";
 import CriticalState from "./CriticalState";
 import ChannelPI from "./ChannelPI";
+import ParamNumberInput from "./ParamNumberInput";
 
 type Props = {
   criticalState: CriticalState;
@@ -48,7 +49,10 @@ const Timeline: FC<Props> = ({ criticalState, className }) => {
         >
           Play
         </button>
+        <div className={classes.divider} />
         <ChannelPI name="t" channel={criticalState.time} suffix="s" />
+        <div className={classes.divider} />
+        <ParamNumberInput name="Speed" units="x" />
       </div>
       <input
         defaultValue={0}
