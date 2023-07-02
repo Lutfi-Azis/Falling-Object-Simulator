@@ -25,6 +25,13 @@ const TopRightGroup: FC<Props> = ({ criticalState, className }) => {
         fit={false}
         className={classes.channelPI}
       />
+      <ChannelPI
+        channel={criticalState.velocity}
+        name="v"
+        suffix="m/s"
+        fit={false}
+        className={classes.channelPI}
+      />
     </div>
   );
 };
