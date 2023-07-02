@@ -2,54 +2,27 @@
 
 .togglePlay {
   width: 78px;
-  font-family: var(--font-label);
-  border: solid 3px var(--color-neutral-3);
-  border-radius: 10px;
-  padding: 5px 10px;
-  font-size: 24px;
-  cursor: pointer;
 }
 
 .timeline {
   text-align: center;
   padding-top: 10px;
+  font-size: 24px;
 }
 
 .timelineControls {
   padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timelineControls > * {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: inherit;
 }
 
 .timelineSlider {
   width: 80%;
-  background-color: var(--color-cneutral-2);
-  height: 14px;
-  border-radius: 30px;
-}
-
-.timelineSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: rgb(157, 239, 254);
-  background: radial-gradient(
-    circle,
-    rgba(157, 239, 254, 1) 31%,
-    rgba(81, 153, 166, 1) 100%
-  );
-  cursor: pointer;
-}
-
-.timelineSlider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: rgb(157, 239, 254);
-  background: radial-gradient(
-    circle,
-    rgba(157, 239, 254, 1) 31%,
-    rgba(81, 153, 166, 1) 100%
-  );
-  cursor: pointer;
 }

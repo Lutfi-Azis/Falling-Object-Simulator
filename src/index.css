@@ -10,3 +10,45 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+button {
+  font-family: var(--font-label);
+  border: solid 3px var(--color-neutral-3);
+  border-radius: 10px;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+input[type="range"] {
+  background-color: var(--color-cneutral-2);
+  height: 14px;
+  border-radius: 30px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgb(157, 239, 254);
+  background: radial-gradient(
+    circle,
+    rgba(157, 239, 254, 1) 31%,
+    rgba(81, 153, 166, 1) 100%
+  );
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgb(157, 239, 254);
+  background: radial-gradient(
+    circle,
+    rgba(157, 239, 254, 1) 31%,
+    rgba(81, 153, 166, 1) 100%
+  );
+  cursor: pointer;
+}
