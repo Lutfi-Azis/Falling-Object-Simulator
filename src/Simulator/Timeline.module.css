@@ -1,0 +1,31 @@
+@import "../globals.css";
+
+.timeline {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.timelineSlider {
+  width: 80%;
+  background-color: var(--color-neutral-2);
+  height: 15px;
+  border-radius: 30px;
+}
+
+.timelineSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #5bacbb;
+  cursor: pointer;
+}
+
+.timelineSlider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #5bacbb;
+  cursor: pointer;
+}

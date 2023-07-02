@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, Ref } from "react";
 import classes from "./ParamInput.module.css";
 
 export type CommonProps = {
   className?: string;
   maxInputWidth?: string;
+  inputRef?: Ref<HTMLInputElement>;
 };
 
 type Props = CommonProps & {
@@ -14,9 +15,11 @@ type Props = CommonProps & {
 };
 
 const ParamInput: FC<Props> = (props) => {
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    props.onChange?.(event.target.value);
-  };
+  let handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  if (props.onChange)
+    handleChange = (event) => {
+      props.onChange?.(event.target.value);
+    };
 
   return (
     <p className={classes.param + " " + props.className}>
@@ -30,6 +33,7 @@ const ParamInput: FC<Props> = (props) => {
           width: props.value ? `${props.value.length}ch` : "5ch",
           maxWidth: props.maxInputWidth,
         }}
+        ref={props.inputRef}
       />{" "}
       {props.suffix}
     </p>

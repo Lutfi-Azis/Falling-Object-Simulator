@@ -3,10 +3,14 @@ import classes from "./Simulator.module.css";
 import ParamNumberInput from "./ParamNumberInput";
 import DiveTower from "./DiveTower";
 import Volleyball from "./Volleyball";
+import HeightPI from "./HeightPI";
+import CriticalState from "./CriticalState";
+import Timeline from "./Timeline";
+import SimulatorController from "./SimulatorController";
 
 type Props = Record<string, never>;
 
-type State = {
+export type State = {
   /**
    * Mass of the object (kg).
    */
@@ -20,16 +24,14 @@ type State = {
    */
   initialHeight: number;
   /**
-   * Is the simulator currently playing.
-   */
-  isPlaying: boolean;
-  /**
    * The Y (or top) coordinate of the tip of the board.
    */
   boardTipY: number;
 };
 
 class Simulator extends Component<Props, State> {
+  private criticalState = new CriticalState();
+  private simulatorController: SimulatorController;
   constructor(props: Props) {
     super(props);
 
@@ -37,9 +39,19 @@ class Simulator extends Component<Props, State> {
       mass: 10,
       g: 10,
       initialHeight: 10,
-      isPlaying: false,
       boardTipY: 0,
     };
+    this.criticalState.ballHeight.notify(this.state.initialHeight);
+
+    this.simulatorController = new SimulatorController(
+      this.criticalState,
+      () => this.state
+    );
+  }
+
+  componentWillUnmount() {
+    this.criticalState.isPlaying.notify(false);
+    this.criticalState.destroy();
   }
 
   handleMassChange = (value: number) => this.setState({ mass: value });
@@ -50,6 +62,7 @@ class Simulator extends Component<Props, State> {
     this.setState({ boardTipY: value });
 
   render() {
+    this.simulatorController.recalculateDerivedStableState();
     return (
       <div className={classes.Simulator}>
         <div className={classes.topLeftGroup}>
@@ -85,9 +98,13 @@ class Simulator extends Component<Props, State> {
           </div>
           <div className={classes.wet}>
             <Volleyball leftOffset={130} boardTipY={this.state.boardTipY} />
+            <HeightPI criticalState={this.criticalState} />
           </div>
         </div>
-        <div className={classes.ground}></div>
+        <Timeline
+          criticalState={this.criticalState}
+          className={classes.ground}
+        />
       </div>
     );
   }
