@@ -2,11 +2,10 @@ import { Component } from "react";
 import classes from "./Simulator.module.css";
 import ParamNumberInput from "./ParamNumberInput";
 import DiveTower from "./DiveTower";
-import Volleyball from "./Volleyball";
-import HeightPI from "./HeightPI";
 import CriticalState from "./CriticalState";
 import Timeline from "./Timeline";
 import SimulatorController from "./SimulatorController";
+import WetArea from "./WetArea";
 
 type Props = Record<string, never>;
 
@@ -30,8 +29,8 @@ export type State = {
 };
 
 class Simulator extends Component<Props, State> {
-  private criticalState = new CriticalState();
-  private simulatorController: SimulatorController;
+  private criticalState?: CriticalState;
+  private simulatorController?: SimulatorController;
   constructor(props: Props) {
     super(props);
 
@@ -41,17 +40,26 @@ class Simulator extends Component<Props, State> {
       initialHeight: 10,
       boardTipY: 0,
     };
+  }
+
+  componentDidMount() {
+    this.criticalState = new CriticalState();
     this.criticalState.ballHeight.notify(this.state.initialHeight);
 
     this.simulatorController = new SimulatorController(
       this.criticalState,
       () => this.state
     );
-  }
 
+    this.simulatorController.recalculateDerivedStableState();
+    this.simulatorController.recalculateCriticalState();
+
+    // So `criticalState` and `simulatorController` will be available in `render`.
+    this.forceUpdate();
+  }
   componentWillUnmount() {
-    this.criticalState.isPlaying.notify(false);
-    this.criticalState.destroy();
+    this.criticalState?.isPlaying.notify(false);
+    this.criticalState?.destroy();
   }
 
   handleMassChange = (value: number) => this.setState({ mass: value });
@@ -62,7 +70,8 @@ class Simulator extends Component<Props, State> {
     this.setState({ boardTipY: value });
 
   render() {
-    this.simulatorController.recalculateDerivedStableState();
+    if (!this.criticalState || !this.simulatorController) return null;
+
     return (
       <div className={classes.Simulator}>
         <div className={classes.topLeftGroup}>
@@ -96,10 +105,12 @@ class Simulator extends Component<Props, State> {
               <DiveTower onTipYChange={this.handleTipYBoardChange} />
             </div>
           </div>
-          <div className={classes.wet}>
-            <Volleyball leftOffset={130} boardTipY={this.state.boardTipY} />
-            <HeightPI criticalState={this.criticalState} />
-          </div>
+          <WetArea
+            className={classes.wet}
+            boardTipY={this.state.boardTipY}
+            criticalState={this.criticalState}
+            initialBallHeight={this.state.initialHeight}
+          />
         </div>
         <Timeline
           criticalState={this.criticalState}
