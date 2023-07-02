@@ -21,6 +21,9 @@ const Timeline: FC<Props> = ({
   const sliderRef = useRef<HTMLInputElement>(null);
 
   const handleClick = useCallback(() => {
+    if (criticalState.progress.getLatest() === 1)
+      criticalState.progress.notify(0);
+
     criticalState.isPlaying.notify(!criticalState.isPlaying.getLatest());
   }, [criticalState]);
 

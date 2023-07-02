@@ -49,6 +49,7 @@ class SimulatorController {
 
   private loop = (timestamp: number) => {
     const elapsed = timestamp - this.prevRAFTimestamp;
+    let last = false;
     if (!this.criticalState.isPlaying.getLatest()) return;
 
     if (elapsed >= MAX_MS_PER_FRAME) {
@@ -57,14 +58,15 @@ class SimulatorController {
 
       if (newProgress > 1) {
         newProgress = 1;
-        this.criticalState.isPlaying.notify(false);
+        last = true;
       }
 
       this.criticalState.progress.notify(newProgress);
       this.prevRAFTimestamp = timestamp;
     }
 
-    requestAnimationFrame(this.loop);
+    if (!last) requestAnimationFrame(this.loop);
+    else this.criticalState.isPlaying.notify(false);
   };
 
   /**
