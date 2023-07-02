@@ -40,7 +40,7 @@ class SimulatorController {
   recalculateDerivedStableState() {
     const state = this.getState();
     this.endTime = getTouchDownTime(state.initialHeight, 0, state.g);
-    this.progressIncrement = state.playSpeed / MAX_FPS;
+    this.progressIncrement = state.playSpeed / (this.endTime * MAX_FPS);
   }
 
   recalculateCriticalState() {
