@@ -1,0 +1,9 @@
+.channelPI {
+  display: flex;
+}
+
+.channelPI > input {
+  flex-grow: 1;
+  text-align: right;
+  padding: 0 15px;
+}

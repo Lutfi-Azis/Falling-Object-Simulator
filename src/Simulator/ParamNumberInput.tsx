@@ -4,7 +4,7 @@ import ParamInput, { CommonProps } from "./ParamInput";
 type Props = CommonProps & {
   name: string;
   value?: number;
-  units: string;
+  units?: string;
   onChange?: (value: number) => void;
 };
 

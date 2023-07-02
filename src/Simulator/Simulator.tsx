@@ -91,7 +91,6 @@ class Simulator extends Component<Props, State> {
             </div>
           </div>
           <WetArea
-            className={classes.wet}
             boardTipY={this.state.boardTipY}
             criticalState={this.criticalState}
             initialBallHeight={this.state.initialHeight}

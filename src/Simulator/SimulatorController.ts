@@ -73,18 +73,22 @@ class SimulatorController {
     const time = this.endTime * this.criticalState.progress.getLatest();
     const state = this.getState();
     const velocity = kecKetikaT(0, state.g, time);
+    const ballHeight = tinggiBendaWaktuTertentu(
+      0,
+      time,
+      state.g,
+      state.initialHeight
+    );
 
     this.criticalState.time.notify(time);
-    this.criticalState.ballHeight.notify(
-      tinggiBendaWaktuTertentu(0, time, state.g, state.initialHeight)
-    );
+    this.criticalState.ballHeight.notify(ballHeight);
 
     this.criticalState.velocity.notify(velocity);
     this.criticalState.kineticEnergy.notify(
       energiKinetik(state.mass, velocity)
     );
     this.criticalState.potentialEnergy.notify(
-      energiPotensial(state.mass, state.g, state.initialHeight)
+      energiPotensial(state.mass, state.g, ballHeight)
     );
   };
 }

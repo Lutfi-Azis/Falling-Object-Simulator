@@ -6,6 +6,7 @@ export type CommonProps = {
   maxInputWidth?: string;
   inputRef?: Ref<HTMLInputElement>;
   containerRef?: Ref<HTMLParagraphElement>;
+  fit?: boolean;
 };
 
 type Props = CommonProps & {
@@ -15,12 +16,18 @@ type Props = CommonProps & {
   onChange?: (value: string) => void;
 };
 
-const ParamInput: FC<Props> = (props) => {
+const ParamInput: FC<Props> = ({ fit = true, ...props }) => {
   let handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   if (props.onChange)
     handleChange = (event) => {
       props.onChange?.(event.target.value);
     };
+
+  const styleObj: React.CSSProperties = {
+    maxWidth: props.maxInputWidth,
+  };
+
+  if (fit) styleObj.width = props.value ? `${props.value.length}ch` : "5ch";
 
   return (
     <p
@@ -33,10 +40,7 @@ const ParamInput: FC<Props> = (props) => {
         className={classes.paramInput}
         value={props.value}
         onChange={handleChange}
-        style={{
-          width: props.value ? `${props.value.length}ch` : "5ch",
-          maxWidth: props.maxInputWidth,
-        }}
+        style={styleObj}
         ref={props.inputRef}
       />{" "}
       {props.suffix}

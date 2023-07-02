@@ -1,7 +1,9 @@
 import { FC, useCallback, useRef } from "react";
+import classes from "./WetArea.module.css";
 import Volleyball from "./Volleyball";
 import HeightPI from "./HeightPI";
 import CriticalState from "./CriticalState";
+import TopRightGroup from "./TopRightGroup";
 
 type Props = {
   boardTipY: number;
@@ -17,7 +19,7 @@ const WetArea: FC<Props> = (props) => {
     []
   );
   return (
-    <div className={props.className} ref={divRef}>
+    <div className={classes.wet} ref={divRef}>
       <Volleyball
         leftOffset={130}
         boardTipY={props.boardTipY}
@@ -30,6 +32,10 @@ const WetArea: FC<Props> = (props) => {
         boardTipY={props.boardTipY}
         getParentHeight={getHeight}
         initialBallHeight={props.initialBallHeight}
+      />
+      <TopRightGroup
+        className={classes.topRightGroup}
+        criticalState={props.criticalState}
       />
     </div>
   );

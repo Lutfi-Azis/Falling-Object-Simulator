@@ -1,0 +1,13 @@
+.wet {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.topRightGroup {
+  width: 300px;
+  max-width: 50%;
+  padding: 60px 60px 0 0;
+}
