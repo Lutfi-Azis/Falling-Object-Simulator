@@ -27,6 +27,10 @@ class SimulatorController {
     this.recalculateDerivedStableState();
   }
 
+  getEndTime = () => {
+    return this.endTime;
+  };
+
   private handlePlayStateChange = (isPlaying: boolean) => {
     if (!isPlaying) return;
     this.recalculateDerivedStableState();

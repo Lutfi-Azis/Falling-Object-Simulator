@@ -1,4 +1,4 @@
-import { FC, Ref } from "react";
+import { FC, Ref, useEffect, useState } from "react";
 import classes from "./ParamInput.module.css";
 
 export type CommonProps = {
@@ -7,6 +7,8 @@ export type CommonProps = {
   inputRef?: Ref<HTMLInputElement>;
   containerRef?: Ref<HTMLParagraphElement>;
   fit?: boolean;
+  delayed?: boolean;
+  disabled?: boolean;
 };
 
 type Props = CommonProps & {
@@ -16,18 +18,32 @@ type Props = CommonProps & {
   onChange?: (value: string) => void;
 };
 
-const ParamInput: FC<Props> = ({ fit = true, ...props }) => {
-  let handleChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  if (props.onChange)
-    handleChange = (event) => {
-      props.onChange?.(event.target.value);
+const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
+  let handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (!props.delayed) props.onChange?.(event.target.value);
+    setInputValue(event.target.value);
+  };
+
+  if (props.onChange && props.delayed) {
+    handleKeyDown = (event) => {
+      if (event.key !== "Enter") return;
+      // Indirectl calls props.onChange
+      event.currentTarget.blur();
     };
+  }
 
   const styleObj: React.CSSProperties = {
     maxWidth: props.maxInputWidth,
   };
 
-  if (fit) styleObj.width = props.value ? `${props.value.length}ch` : "5ch";
+  if (fit) styleObj.width = value ? `${value.length}ch` : "5ch";
 
   return (
     <p
@@ -38,10 +54,13 @@ const ParamInput: FC<Props> = ({ fit = true, ...props }) => {
       <input
         type="text"
         className={classes.paramInput}
-        value={props.value}
+        value={value ? inputValue : undefined}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={(event) => props.onChange?.(event.target.value)}
         style={styleObj}
         ref={props.inputRef}
+        disabled={props.disabled}
       />{" "}
       {props.suffix}
     </p>

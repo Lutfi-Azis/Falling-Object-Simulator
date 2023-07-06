@@ -6,6 +6,7 @@ import ParamNumberInput from "./ParamNumberInput";
 
 type Props = {
   criticalState: CriticalState;
+  endTime: number;
   className?: string;
   playSpeed: number;
   onSpeedChange?: (value: number) => void;
@@ -13,6 +14,7 @@ type Props = {
 
 const Timeline: FC<Props> = ({
   criticalState,
+  endTime,
   className,
   playSpeed,
   onSpeedChange,
@@ -29,6 +31,14 @@ const Timeline: FC<Props> = ({
 
   const handleInputChange = () => {
     criticalState.progress.notify(parseInt(sliderRef.current!.value) / 1000);
+  };
+
+  const handleChannelTChange = (t: number) => {
+    let progress = t / endTime;
+    if (progress > 1) progress = 1;
+    else if (progress < 0) progress = 0;
+
+    criticalState.progress.notify(progress);
   };
 
   useEffect(() => {
@@ -60,7 +70,13 @@ const Timeline: FC<Props> = ({
           Play
         </button>
         <div className={classes.divider} />
-        <ChannelPI name="t" channel={criticalState.time} suffix="s" />
+
+        <ChannelPI
+          name="t"
+          channel={criticalState.time}
+          suffix="s"
+          onChange={handleChannelTChange}
+        />
         <div className={classes.divider} />
         <ParamNumberInput
           name="Speed"
@@ -69,6 +85,7 @@ const Timeline: FC<Props> = ({
           onChange={onSpeedChange}
         />
       </div>
+
       <input
         defaultValue={0}
         className={classes.timelineSlider}

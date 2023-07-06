@@ -38,6 +38,7 @@ const ChannelPI: FC<Props> = ({
       name={name}
       units={suffix}
       onChange={onChange}
+      delayed={true}
       {...props}
     />
   );

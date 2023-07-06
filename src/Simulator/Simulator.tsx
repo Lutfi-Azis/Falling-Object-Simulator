@@ -103,6 +103,7 @@ class Simulator extends Component<Props, State> {
         </div>
         <Timeline
           criticalState={this.criticalState}
+          endTime={this.simulatorController.getEndTime()}
           className={classes.ground}
           playSpeed={this.state.playSpeed}
           onSpeedChange={this.handleSpeedChange}
