@@ -25,8 +25,7 @@ const HeightPI: FC<Props> = ({
   const minTop = a + (parentHeight - a) / 2;
   const maxTop = parentHeight - 60;
 
-  const handleNotification = () => {
-    const ballHeight = criticalState.ballHeight.getLatest();
+  const handleNotification = (ballHeight: number) => {
     labelRef.current!.style.top =
       map(ballHeight, 0, initialBallHeight, maxTop, minTop).toString() + "px";
   };
@@ -35,8 +34,8 @@ const HeightPI: FC<Props> = ({
     <div className={classes.heightLabel} ref={labelRef}>
       <ChannelPI
         name="h"
-        channel={criticalState.time}
-        suffix="s"
+        channel={criticalState.ballHeight}
+        suffix="m"
         onNotification={handleNotification}
         containerRef={labelRef}
       />

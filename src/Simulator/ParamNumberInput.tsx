@@ -28,6 +28,7 @@ const ParamNumberInput: FC<Props> = ({
       onChange={(value) => {
         if (value.length === 0) value = "0";
         setForcedDot(value[value.length - 1] === ".");
+        if (value === ".") value = "0.";
 
         const isValid = /^-?\d*\.?\d*$/.test(value);
         if (isValid) onChange?.(parseFloat(value));
