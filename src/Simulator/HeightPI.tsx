@@ -1,8 +1,8 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import classes from "./HeightPI.module.css";
-import ParamNumberInput from "./ParamNumberInput";
 import CriticalState from "./CriticalState";
 import { map } from "../utils";
+import ChannelPI from "./ChannelPI";
 
 type Props = {
   boardTipY: number;
@@ -18,7 +18,6 @@ const HeightPI: FC<Props> = ({
   getParentHeight,
   initialBallHeight,
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
 
   const a = boardTipY - 60;
@@ -26,31 +25,22 @@ const HeightPI: FC<Props> = ({
   const minTop = a + (parentHeight - a) / 2;
   const maxTop = parentHeight - 60;
 
-  useEffect(() => {
-    const handleBallHeightChange = (value: number) => {
-      if (Math.abs(value) < 0.01) value = 0;
-      inputRef.current!.value = value.toFixed(1);
-      labelRef.current!.style.top =
-        map(value, 0, initialBallHeight, maxTop, minTop).toString() + "px";
-    };
-
-    handleBallHeightChange(criticalState.ballHeight.getLatest());
-    criticalState.ballHeight.subscribe(handleBallHeightChange);
-
-    return () => {
-      criticalState.ballHeight.unsubscribe(handleBallHeightChange);
-    };
-  }, [initialBallHeight, minTop, maxTop, criticalState]);
+  const handleNotification = () => {
+    const ballHeight = criticalState.ballHeight.getLatest();
+    labelRef.current!.style.top =
+      map(ballHeight, 0, initialBallHeight, maxTop, minTop).toString() + "px";
+  };
 
   return (
-    <ParamNumberInput
-      className={classes.heightLabel}
-      name="h"
-      units="m"
-      maxInputWidth="6ch"
-      inputRef={inputRef}
-      containerRef={labelRef}
-    />
+    <div className={classes.heightLabel} ref={labelRef}>
+      <ChannelPI
+        name="h"
+        channel={criticalState.time}
+        suffix="s"
+        onNotification={handleNotification}
+        containerRef={labelRef}
+      />
+    </div>
   );
 };
 

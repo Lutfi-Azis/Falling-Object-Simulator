@@ -1,10 +1,10 @@
-import { FC, Ref, useEffect, useState } from "react";
+import { FC, Ref, useEffect, useState, RefObject } from "react";
 import classes from "./ParamInput.module.css";
 
 export type CommonProps = {
   className?: string;
   maxInputWidth?: string;
-  inputRef?: Ref<HTMLInputElement>;
+  inputRef?: RefObject<HTMLInputElement>;
   containerRef?: Ref<HTMLParagraphElement>;
   fit?: boolean;
   delayed?: boolean;
@@ -34,7 +34,7 @@ const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
   if (props.onChange && props.delayed) {
     handleKeyDown = (event) => {
       if (event.key !== "Enter") return;
-      // Indirectl calls props.onChange
+      // Indirectly calls props.onChange
       event.currentTarget.blur();
     };
   }

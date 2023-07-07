@@ -8,6 +8,7 @@ type Props = CommonProps & {
   suffix?: string;
   channel: Channel<number>;
   onChange?: (value: number) => void;
+  onNotification?: (value: number) => void;
 };
 
 const ChannelPI: FC<Props> = ({
@@ -15,22 +16,25 @@ const ChannelPI: FC<Props> = ({
   suffix,
   channel,
   onChange,
+  onNotification,
   ...props
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleNotification = (value: number) => {
+      onNotification?.(value);
       if (Math.abs(value) < 0.01) value = 0;
       inputRef.current!.value = value.toFixed(1).toString();
     };
+
     handleNotification(channel.getLatest());
     channel.subscribe(handleNotification);
 
     return () => {
       channel.unsubscribe(handleNotification);
     };
-  }, [channel]);
+  }, [channel, inputRef, onNotification]);
 
   return (
     <ParamNumberInput
