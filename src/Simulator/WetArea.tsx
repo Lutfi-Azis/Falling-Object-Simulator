@@ -10,6 +10,9 @@ type Props = {
   criticalState: CriticalState;
   className?: string;
   initialBallHeight: number;
+  endTime: number;
+  gravity: number;
+  initialVelocity?: number;
 };
 
 const WetArea: FC<Props> = (props) => {
@@ -19,7 +22,7 @@ const WetArea: FC<Props> = (props) => {
   return (
     <div className={classes.wet} ref={divRef}>
       <Volleyball
-        leftOffset={130}
+        leftOffset={170}
         boardTipY={props.boardTipY}
         getParentHeight={getHeight}
         initialBallHeight={props.initialBallHeight}
@@ -30,6 +33,9 @@ const WetArea: FC<Props> = (props) => {
         boardTipY={props.boardTipY}
         getParentHeight={getHeight}
         initialBallHeight={props.initialBallHeight}
+        endTime={props.endTime}
+        gravity={props.gravity}
+        initialVelocity={props.initialVelocity}
       />
       <TopRightGroup
         className={classes.topRightGroup}

@@ -31,3 +31,17 @@ export function getTouchDownTime(
   const result2 = (-initialVelocity - Math.sqrt(determinant)) / acceleration;
   return Math.max(result1, result2);
 }
+
+export function heightToProgress(
+  height: number,
+  initialHeight: number,
+  initialVelocity: number,
+  acceleration: number,
+  endTime: number
+) {
+  const distanceFell = initialHeight - height;
+  const determinant = initialVelocity ** 2 - 2 * acceleration * -distanceFell;
+  const result1 = (-initialVelocity + Math.sqrt(determinant)) / acceleration;
+  const result2 = (-initialVelocity - Math.sqrt(determinant)) / acceleration;
+  return Math.max(result1, result2) / endTime;
+}

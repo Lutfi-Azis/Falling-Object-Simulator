@@ -99,6 +99,9 @@ class Simulator extends Component<Props, State> {
             boardTipY={this.state.boardTipY}
             criticalState={this.criticalState}
             initialBallHeight={this.state.initialHeight}
+            endTime={this.simulatorController.getEndTime()}
+            initialVelocity={0}
+            gravity={this.state.g}
           />
         </div>
         <Timeline

@@ -9,6 +9,7 @@ export type CommonProps = {
   fit?: boolean;
   delayed?: boolean;
   disabled?: boolean;
+  onEnter?: (value: string) => void;
 };
 
 type Props = CommonProps & {
@@ -54,10 +55,13 @@ const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
       <input
         type="text"
         className={classes.paramInput}
-        value={value ? inputValue : undefined}
+        value={value !== undefined ? inputValue : undefined}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        onBlur={(event) => props.onChange?.(event.target.value)}
+        onBlur={(event) => {
+          props.onChange?.(event.target.value);
+          props.onEnter?.(event.target.value);
+        }}
         style={styleObj}
         ref={props.inputRef}
         disabled={props.disabled}
