@@ -79,6 +79,20 @@ class Simulator extends Component<Props, State> {
 
     return (
       <div className={classes.Simulator}>
+        <div className={classes.topLeftGroup}>
+          <ParamNumberInput
+            name="massa"
+            value={this.state.mass}
+            units="kg"
+            onChange={this.handleMassChange}
+          />
+          <ParamNumberInput
+            name="gravitasi"
+            value={this.state.g}
+            units="m/s^2"
+            onChange={this.handleGChange}
+          />
+        </div>
         <div className={classes.air}>
           <div className={classes.dry}>
             <div className={classes.curlyTrio}>
@@ -112,20 +126,6 @@ class Simulator extends Component<Props, State> {
           playSpeed={this.state.playSpeed}
           onSpeedChange={this.handleSpeedChange}
         />
-        <div className={classes.topLeftGroup}>
-          <ParamNumberInput
-            name="massa"
-            value={this.state.mass}
-            units="kg"
-            onChange={this.handleMassChange}
-          />
-          <ParamNumberInput
-            name="gravitasi"
-            value={this.state.g}
-            units="m/s^2"
-            onChange={this.handleGChange}
-          />
-        </div>
       </div>
     );
   }

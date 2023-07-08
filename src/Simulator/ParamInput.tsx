@@ -10,6 +10,7 @@ export type CommonProps = {
   delayed?: boolean;
   disabled?: boolean;
   onEnter?: (value: string) => void;
+  tabIndex?: number;
 };
 
 type Props = CommonProps & {

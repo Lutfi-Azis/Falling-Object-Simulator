@@ -19,6 +19,10 @@ button {
   cursor: pointer;
 }
 
+button:focus {
+  outline: auto;
+}
+
 input[type="range"] {
   background-color: var(--color-cneutral-2);
   height: 14px;
@@ -51,4 +55,12 @@ input[type="range"]::-moz-range-thumb {
     rgba(81, 153, 166, 1) 100%
   );
   cursor: pointer;
+}
+
+input:focus {
+  outline: auto;
+}
+
+input::selection {
+  background-color: rgba(255, 255, 255, 0.151);
 }

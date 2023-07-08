@@ -12,6 +12,7 @@
   position: relative;
   flex-grow: 1;
   display: flex;
+  z-index: 1;
 }
 
 .ground {
@@ -60,4 +61,5 @@
   top: 70px;
   left: 60px;
   position: absolute;
+  z-index: 2;
 }
