@@ -11,6 +11,7 @@ export type CommonProps = {
   disabled?: boolean;
   onEnter?: (value: string) => void;
   tabIndex?: number;
+  inputMode?: "numeric" | "decimal";
 };
 
 type Props = CommonProps & {
@@ -66,6 +67,7 @@ const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
         style={styleObj}
         ref={props.inputRef}
         disabled={props.disabled}
+        inputMode={props.inputMode}
       />{" "}
       {props.suffix}
     </p>

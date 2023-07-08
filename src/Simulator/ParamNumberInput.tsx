@@ -33,6 +33,7 @@ const ParamNumberInput: FC<Props> = ({
         const isValid = /^-?\d*\.?\d*$/.test(value);
         if (isValid) onChange?.(parseFloat(value));
       }}
+      inputMode="decimal"
       {...props}
     />
   );
