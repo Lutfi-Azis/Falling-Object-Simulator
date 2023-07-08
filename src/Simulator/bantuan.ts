@@ -45,3 +45,44 @@ export function heightToProgress(
   const result2 = (-initialVelocity - Math.sqrt(determinant)) / acceleration;
   return Math.max(result1, result2) / endTime;
 }
+
+export function velocityToProgress(
+  initialVelocity: number,
+  velocity: number,
+  gravity: number,
+  endTime: number
+) {
+  return (velocity - initialVelocity) / gravity / endTime;
+}
+
+export function potentialToProgress(
+  potential: number,
+  mass: number,
+  gravity: number,
+  initialHeight: number,
+  initialVelocity: number,
+  endTime: number
+) {
+  return heightToProgress(
+    potential / (mass * gravity),
+    initialHeight,
+    initialVelocity,
+    gravity,
+    endTime
+  );
+}
+
+export function kineticToProgress(
+  kinetic: number,
+  mass: number,
+  initialVelocity: number,
+  gravity: number,
+  endTime: number
+) {
+  return velocityToProgress(
+    initialVelocity,
+    Math.sqrt((2 * kinetic) / mass),
+    gravity,
+    endTime
+  );
+}

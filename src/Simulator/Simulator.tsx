@@ -102,6 +102,7 @@ class Simulator extends Component<Props, State> {
             endTime={this.simulatorController.getEndTime()}
             initialVelocity={0}
             gravity={this.state.g}
+            mass={this.state.mass}
           />
         </div>
         <Timeline

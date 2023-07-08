@@ -13,6 +13,7 @@ type Props = {
   endTime: number;
   gravity: number;
   initialVelocity?: number;
+  mass: number;
 };
 
 const WetArea: FC<Props> = (props) => {
@@ -40,6 +41,11 @@ const WetArea: FC<Props> = (props) => {
       <TopRightGroup
         className={classes.topRightGroup}
         criticalState={props.criticalState}
+        endTime={props.endTime}
+        gravity={props.gravity}
+        initialVelocity={props.initialVelocity ? props.initialVelocity : 0}
+        initialHeight={props.initialBallHeight}
+        mass={props.mass}
       />
     </div>
   );
