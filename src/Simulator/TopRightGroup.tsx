@@ -27,7 +27,7 @@ const TopRightGroup: FC<Props> = ({
 }) => {
   const handleVelocityStrInput = (value: string) => {
     const velocity = parseFloat(value);
-    if (velocity - criticalState.velocity.getLatest() < 0.01) return;
+    if (Math.abs(velocity - criticalState.velocity.getLatest()) < 0.01) return;
     handleVelocityInput?.(velocity);
   };
   const handlePotentialInput = (value: string) => {
