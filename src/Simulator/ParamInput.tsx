@@ -19,6 +19,7 @@ type Props = CommonProps & {
   value?: string;
   suffix?: string;
   onChange?: (value: string) => void;
+  onClick?: () => void;
 };
 
 const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
@@ -52,6 +53,7 @@ const ParamInput: FC<Props> = ({ fit = true, value, ...props }) => {
     <p
       className={classes.param + " " + props.className}
       ref={props.containerRef}
+      onClick={props.onClick}
     >
       {props.prefix}{" "}
       <input

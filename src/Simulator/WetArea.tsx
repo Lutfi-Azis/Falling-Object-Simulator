@@ -14,6 +14,9 @@ type Props = {
   gravity: number;
   initialVelocity?: number;
   mass: number;
+  onSelect?: (name: string) => void;
+  selectable?: boolean;
+  handleVelocityInput?: (value: number) => void;
 };
 
 const WetArea: FC<Props> = (props) => {
@@ -46,6 +49,7 @@ const WetArea: FC<Props> = (props) => {
         initialVelocity={props.initialVelocity ? props.initialVelocity : 0}
         initialHeight={props.initialBallHeight}
         mass={props.mass}
+        handleVelocityInput={props.handleVelocityInput}
       />
     </div>
   );

@@ -10,6 +10,8 @@ type Props = {
   className?: string;
   playSpeed: number;
   onSpeedChange?: (value: number) => void;
+  onSelect?: (name: string) => void;
+  selectable?: boolean;
 };
 
 const Timeline: FC<Props> = ({
@@ -18,6 +20,8 @@ const Timeline: FC<Props> = ({
   className,
   playSpeed,
   onSpeedChange,
+  onSelect,
+  selectable,
 }) => {
   const btnRef = useRef<HTMLButtonElement>(null);
   const sliderRef = useRef<HTMLInputElement>(null);
@@ -76,6 +80,8 @@ const Timeline: FC<Props> = ({
           channel={criticalState.time}
           suffix="s"
           onChange={handleChannelTChange}
+          onSelect={onSelect}
+          selectable={selectable}
         />
         <div className={classes.divider} />
         <ParamNumberInput

@@ -2,11 +2,7 @@ import { FC } from "react";
 import classes from "./TopRightGroup.module.css";
 import CriticalState from "./CriticalState";
 import ChannelPI from "./ChannelPI";
-import {
-  kineticToProgress,
-  potentialToProgress,
-  velocityToProgress,
-} from "./bantuan";
+import { kineticToProgress, potentialToProgress } from "./bantuan";
 
 type Props = {
   criticalState: CriticalState;
@@ -16,6 +12,7 @@ type Props = {
   gravity: number;
   endTime: number;
   mass: number;
+  handleVelocityInput?: (value: number) => void;
 };
 
 const TopRightGroup: FC<Props> = ({
@@ -26,20 +23,12 @@ const TopRightGroup: FC<Props> = ({
   endTime,
   initialHeight,
   mass,
+  handleVelocityInput,
 }) => {
-  const handleVelocityInput = (value: string) => {
+  const handleVelocityStrInput = (value: string) => {
     const velocity = parseFloat(value);
-    let progress = velocityToProgress(
-      initialVelocity,
-      velocity,
-      gravity,
-      endTime
-    );
-
-    if (progress < 0) progress = 0;
-    if (progress > 1) progress = 1;
-
-    criticalState.progress.notify(progress);
+    if (velocity - criticalState.velocity.getLatest() < 0.01) return;
+    handleVelocityInput?.(velocity);
   };
   const handlePotentialInput = (value: string) => {
     const potential = parseFloat(value);
@@ -97,7 +86,7 @@ const TopRightGroup: FC<Props> = ({
         suffix="m/s"
         fit={false}
         className={classes.channelPI}
-        onEnter={handleVelocityInput}
+        onEnter={handleVelocityStrInput}
       />
     </div>
   );

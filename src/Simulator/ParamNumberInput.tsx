@@ -1,11 +1,14 @@
 import { FC, useState } from "react";
 import ParamInput, { CommonProps } from "./ParamInput";
+import classes from "./ParamNumberInput.module.css";
 
 type Props = CommonProps & {
   name: string;
   value?: number;
   units?: string;
   onChange?: (value: number) => void;
+  onSelect?: (name: string) => void;
+  selectable?: boolean;
 };
 
 const ParamNumberInput: FC<Props> = ({
@@ -13,6 +16,8 @@ const ParamNumberInput: FC<Props> = ({
   value,
   units,
   onChange,
+  className,
+  selectable,
   ...props
 }) => {
   const [forcedDot, setForcedDot] = useState(false);
@@ -34,6 +39,11 @@ const ParamNumberInput: FC<Props> = ({
         if (isValid) onChange?.(parseFloat(value));
       }}
       inputMode="decimal"
+      className={className + " " + (selectable ? classes.selectable : "")}
+      onClick={() => {
+        if (!selectable) return;
+        props.onSelect?.(name);
+      }}
       {...props}
     />
   );

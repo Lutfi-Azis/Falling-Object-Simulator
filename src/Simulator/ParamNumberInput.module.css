@@ -1,0 +1,22 @@
+.selectable {
+  animation: selectable-param-anim 2s infinite;
+  border: 2px solid #000;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.selectable:hover {
+  border: 2px solid #fff;
+}
+
+@keyframes selectable-param-anim {
+  0% {
+    border-color: rgba(0, 255, 234, 0.267);
+  }
+  50% {
+    border-color: rgba(0, 255, 234, 0.63);
+  }
+  100% {
+    border-color: rgba(0, 255, 234, 0.267);
+  }
+}

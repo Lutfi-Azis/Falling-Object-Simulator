@@ -9,6 +9,8 @@ type Props = CommonProps & {
   channel: Channel<number>;
   onChange?: (value: number) => void;
   onNotification?: (value: number) => void;
+  onSelect?: (name: string) => void;
+  selectable?: boolean;
 };
 
 const ChannelPI: FC<Props> = ({
@@ -20,7 +22,6 @@ const ChannelPI: FC<Props> = ({
   ...props
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     const handleNotification = (value: number) => {
       onNotification?.(value);
@@ -43,6 +44,8 @@ const ChannelPI: FC<Props> = ({
       units={suffix}
       onChange={onChange}
       delayed={true}
+      onSelect={props.onSelect}
+      selectable={props.selectable}
       {...props}
     />
   );

@@ -6,8 +6,18 @@ import CriticalState from "./CriticalState";
 import Timeline from "./Timeline";
 import SimulatorController from "./SimulatorController";
 import WetArea from "./WetArea";
+import SimulatorCalculator from "./SimulatorCalculator";
+import { heightToProgress, velocityToProgress } from "./bantuan";
 
 type Props = Record<string, never>;
+
+export type BaseParam = "mass" | "g" | "initialHeight" | "time";
+export type DerivedParam = "velocity" | "potentialEnergy" | "kineticEnergy";
+
+export enum Mode {
+  Normal,
+  ParamSelection,
+}
 
 export type State = {
   /**
@@ -30,11 +40,16 @@ export type State = {
    * Playback speed multipler.
    */
   playSpeed: number;
+
+  mode: Mode;
+  affectableBases: BaseParam[];
+  valueHold?: number;
 };
 
 class Simulator extends Component<Props, State> {
   private criticalState?: CriticalState;
   private simulatorController?: SimulatorController;
+  private simulatorCalculator?: SimulatorCalculator;
   constructor(props: Props) {
     super(props);
 
@@ -44,6 +59,8 @@ class Simulator extends Component<Props, State> {
       initialHeight: 10,
       boardTipY: 0,
       playSpeed: 1.0,
+      affectableBases: [],
+      mode: Mode.Normal,
     };
   }
 
@@ -54,6 +71,10 @@ class Simulator extends Component<Props, State> {
     this.simulatorController = new SimulatorController(
       this.criticalState,
       () => this.state
+    );
+    this.simulatorCalculator = new SimulatorCalculator(
+      () => this.state,
+      this.criticalState
     );
 
     // So `criticalState` and `simulatorController` will be available in `render`.
@@ -71,6 +92,66 @@ class Simulator extends Component<Props, State> {
   handleTipYBoardChange = (value: number) =>
     this.setState({ boardTipY: value });
   handleSpeedChange = (value: number) => this.setState({ playSpeed: value });
+
+  handleVelocityInput = (newVelocity: number) => {
+    this.setState({
+      affectableBases:
+        this.simulatorCalculator!.getAffectedBaseParams("velocity"),
+      mode: Mode.ParamSelection,
+      valueHold: newVelocity,
+    });
+  };
+
+  handleParamInputSelect = (name: string) => {
+    if (name === "tinggi") {
+      const prevBallHeight = this.criticalState!.ballHeight.getLatest();
+      const newInitialHeight =
+        Math.round(
+          this.simulatorCalculator!.calculateNewBaseParamValue(
+            this.state.valueHold!,
+            "velocity",
+            "initialHeight"
+          ) * 100
+        ) / 100;
+      this.setState(
+        {
+          initialHeight: newInitialHeight,
+        },
+        () => {
+          this.criticalState?.progress.notify(
+            heightToProgress(
+              prevBallHeight,
+              newInitialHeight,
+              0,
+              this.state.g,
+              this.simulatorController!.getEndTime()
+            )
+          );
+        }
+      );
+    } else if (name === "t") {
+      let newProgress = velocityToProgress(
+        0,
+        this.state.valueHold!,
+        this.state.g,
+        this.simulatorController!.getEndTime()
+      );
+      if (newProgress > 1) newProgress = 1;
+      else if (newProgress < 0) newProgress = 0;
+      this.criticalState?.progress.notify(newProgress);
+    } else if (name === "gravitasi") {
+      const newGravity =
+        Math.round(
+          this.simulatorCalculator!.calculateNewBaseParamValue(
+            this.state.valueHold!,
+            "velocity",
+            "g"
+          ) * 100
+        ) / 100;
+      this.setState({ g: newGravity });
+    }
+    this.setState({ mode: Mode.Normal });
+  };
 
   render() {
     if (!this.criticalState || !this.simulatorController) return null;
@@ -91,6 +172,11 @@ class Simulator extends Component<Props, State> {
             value={this.state.g}
             units="m/s^2"
             onChange={this.handleGChange}
+            selectable={
+              this.state.mode === Mode.ParamSelection &&
+              this.state.affectableBases.includes("g")
+            }
+            onSelect={this.handleParamInputSelect}
           />
         </div>
         <div className={classes.air}>
@@ -103,6 +189,11 @@ class Simulator extends Component<Props, State> {
                   value={this.state.initialHeight}
                   units="m"
                   onChange={this.handleInitialHeightChange}
+                  selectable={
+                    this.state.mode === Mode.ParamSelection &&
+                    this.state.affectableBases.includes("initialHeight")
+                  }
+                  onSelect={this.handleParamInputSelect}
                 />
               </div>
               <div></div>
@@ -117,6 +208,7 @@ class Simulator extends Component<Props, State> {
             initialVelocity={0}
             gravity={this.state.g}
             mass={this.state.mass}
+            handleVelocityInput={this.handleVelocityInput}
           />
         </div>
         <Timeline
@@ -125,6 +217,11 @@ class Simulator extends Component<Props, State> {
           className={classes.ground}
           playSpeed={this.state.playSpeed}
           onSpeedChange={this.handleSpeedChange}
+          selectable={
+            this.state.mode === Mode.ParamSelection &&
+            this.state.affectableBases.includes("time")
+          }
+          onSelect={this.handleParamInputSelect}
         />
       </div>
     );
